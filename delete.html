@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="en">
+ 
+<head>
+	<link id="pageStyleSheet" rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <title>Dynamically Populate List Items</title>
+  <style>
+
+* {
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+ 
+body {
+  font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
+  font-size: 14px;
+  line-height: 1.42857143;
+  color: #333;
+  background-color: #fff;
+}
+ 
+/* HACKED THIS IN TO MAKE IT ALIGN BETTER WITH TEXT */
+a#company-logo {
+    position: relative;
+    top: -3px;
+}
+ 
+nav {
+  display: block;
+  background-color: black;
+  width:100%;
+  position: fixed;
+  z-index: 999;
+}
+  
+.navbar {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  background-color: #333;
+  position: sticky;
+  border-radius: 0px;
+}
+
+.navbar li {
+  float: left;
+}
+
+.navbar li a {
+  display: flex;
+  color: white;
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+  align-items: center;
+  height: 53px;
+}
+
+.navbar li a:hover:not(.active) {
+  background-color: #111;
+}
+
+
+.navbar .active {
+  color: #4CAF50;
+}
+  
+
+  
+  
+.panel-body {
+    padding: 7px;
+}
+  
+.panel-default {
+    border-color: #ddd;
+}
+  
+    .code_block {
+      padding: 0;
+      margin: 10px;
+    }
+    .code_block li {
+	  display: block;
+	  padding: 9.5px;
+	  margin: 0 0 10px;
+	  font-size: 13px;
+	  line-height: 1.42857143;
+	  word-break: break-all;
+	  word-wrap: break-word;
+	  background-color: #f5f5f5;
+	  border: 1px solid #ccc;
+	  border-radius: 4px;
+	  font-family: Menlo,Monaco,Consolas,"Courier New",monospace;
+    }
+	.code_block li:hover {
+	  transition: .5s;
+	  background-color: #e0e0e0;
+	}
+
+	.clicked {
+	  opacity: .7;
+	  color: #60c47c;
+	  transition: 1s;
+	}
+	
+  </style>
+</head>
+ 
+<!-- 
+NAV BAR STUFF 
+https://www.w3schools.com/css/css_navbar.asp
+-->
+<body>
+<nav class="navbar">
+  <li><a id="company-logo" ><img height="25" src="https://avitaltours.com/nyc-food-tours/wp-content/uploads/sites/5/2018/12/Accenture-logo-corporate-team-building-NYC-white-300x82.png" alt="Accenture"></a></li>
+  <li><a class="active" href="#home">Home</a></li>
+  <li><a href="#news">News</a></li>
+  <li><a href="#contact">Contact</a></li>
+  <li><a href="#about">About</a></li>
+  <li><a href="#ending">Ending</a></li>
+</nav>
+ 
+<div class="panel-body">
+  <div class="panel panel-default" id="lab1">
+    <div class="panel-heading" id="lab1">
+	<h3>Lab 1 - Installing</h3>
+	"In this exercise, you will perform basic discovery tasks to learn about your lab environment and bring up a Splunk License Master. Throughout the lab activities, you will use the Splunk CLI for configuration tasks and Splunk Web for monitoring and verification tasks.
+		</div>
+	</div>
+  
+  <ul class="code_block">
+ 
+  </ul>
+  
+  <script>
+
+
+
+
+
+  var toppings = ["it was accepabile in the 90s it was acceptable at the time helkol asdsadaqwd asd aasd awiodjasidj awiodja soidj aoidjoiwad jiaosdj awoidjaoisjd oiawjd oiasjdioawjd oiasjd oijawdoi jasoidj awoiasd awiodjasidj awiodja soidj aoidjoiwad jiaosdj awoidjaoisjd oiawjd oiasjdioawjd oiasjd oijawdoi jasoidj awoiwiodjasidj awiodja soidj aoidjoiwad jiaosdj awoidjaoisjd oiawjd oiasjdioawjd oiasjd oijawdoi jasoidj awoijd oiwa", 
+  "Cheese", 
+  "Pepperoni", 
+  "Olives", 
+  "Jalapenos", 
+  "Pineapple", 
+  "Ham",
+  "Ham",
+  "Ham",
+  "Ham",
+  "Ham",
+  "Ham",
+  "Ham",
+  "Ham",
+  "Ham",
+  "Ham",
+  "Ham",
+  "Ham",
+  "Ham",
+  "Ham",
+  "Ham",
+  "Ham",
+  "Ham",
+  "Ham",
+  "Ham",
+  "Ham",
+  "Ham",
+  "Ham",
+  "Ham",
+  "Ham",
+  "Ham",
+  "Ham",
+  "Ham",
+  "Ham",
+  "Ham",
+  "Ham",
+  "Ham",
+  "Ham",
+  "Ham",
+  "Ham",
+  "Ham",
+  "Ham",
+  "Ham",
+  "Ham",
+  "Ham",
+  "Ham",
+  "Ham",
+  "Ham",
+  "Ham",
+  "Ham",
+  "Ham",  
+  ];
+
+let listItem = document.querySelector(".code_block")
+for (let value of toppings) {
+ listValue = document.createElement("li");
+ listValue.textContent = value;
+
+ listValue.onclick = function copyDivToClipboard() {
+ 
+  console.log(this)
+  this.className = "clicked"
+ 
+  const el = document.createElement('textarea');  // Create a <textarea> element
+  el.value = this.textContent;                                 // Set its value to the string that you want copied
+  el.setAttribute('readonly', '');                // Make it readonly to be tamper-proof
+  el.style.position = 'absolute';                 
+  el.style.left = '-9999px';                      // Move outside the screen to make it invisible
+  document.body.appendChild(el);                  // Append the <textarea> element to the HTML document
+  const selected =            
+    document.getSelection().rangeCount > 0        // Check if there is any content selected previously
+      ? document.getSelection().getRangeAt(0)     // Store selection if found
+      : false;                                    // Mark as false to know no selection existed before
+  el.select();                                    // Select the <textarea> content
+  document.execCommand('copy');                   // Copy - only works as a result of a user action (e.g. click events)
+  document.body.removeChild(el);                  // Remove the <textarea> element
+  if (selected) {                                 // If a selection existed before copying
+    document.getSelection().removeAllRanges();    // Unselect everything on the HTML document
+    document.getSelection().addRange(selected);   // Restore the original selection
+  }
+  }
+   listItem.appendChild(listValue);
+  }
+
+
+
+
+
+
+   
+  </script>
+  <div id="ending">
+    thing goes here
+	</div>
+</div>
+</body>
+</html>
