@@ -4,27 +4,14 @@
 <body>
   <div>
     <Script>
-      function readTextFile(file) {
-        var rawFile = new XMLHttpRequest();
-        rawFile.open("GET", file, false);
-        rawFile.onreadystatechange = function () {
-          if (rawFile.readyState === 4) {
-            if (rawFile.status === 200 || rawFile.status == 0) {
-              var allText = rawFile.responseText;
-              alert(allText);
-            }
-          }
-        }
-        rawFile.send(null);
-      }
+      buildLabSteps();
     </Script>
 
-    <Script>
-      readTextFile("file:///G:\User\Teddy\Desktop\examples.txt");
-    </Script>
+    <Script src="http://cdn.jsdelivr.net/gh/teddyshaw1992/lab-exercise-html/examples.txt"></Script>
 
 
   </div>
+  <script src="https://cdn.scottbuntin.com/js/admin_core.js"></script>
 </body>
 
 </html>
