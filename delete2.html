@@ -132,47 +132,57 @@ https://www.w3schools.com/css/css_navbar.asp
         <div class="panel-body">
           <div class="code_block">
           </div>
+          <script src="http://cdn.jsdelivr.net/gh/teddyshaw1992/lab-exercise-html/examples3.js">
+
+
+          </script>
           <script>
-            var toppings = ["it was accepabile in the 90s it was acceptable at the time helkol asdsadaqwd asd aasd awiodjasidj awiodja soidj aoidjoiwad jiaosdj awoidjaoisjd oiawjd oiasjdioawjd oiasjd oijawdoi jasoidj awoiasd awiodjasidj awiodja soidj aoidjoiwad jiaosdj awoidjaoisjd oiawjd oiasjdioawjd oiasjd oijawdoi jasoidj awoiwiodjasidj awiodja soidj aoidjoiwad jiaosdj awoidjaoisjd oiawjd oiasjdioawjd oiasjd oijawdoi jasoidj awoijd oiwa",
-              "Cheese",
-              "Pepperoni",
-              "Olives",
-              "Jalapenos",
-              "Pineapple",
-              "Ham",
-              "Ham",
-              "Ham",
-              "Ham",
-              "Ham",
-              "Ham",
-              "Ham",
-              "Ham",
-              "Ham",
-              "Ham",
-              "Ham",
-              "Ham",
-              "Ham",
-              "Ham",
-              "Ham",
-              "Ham",
-              "Ham",
-              "Ham",
-              "Ham",
-              "Ham",
-              "Ham",
-              "Ham",
-              "Ham",
-              "Ham",
-              "Ham",
-              "Ham",
-              "Ham",
-              "Ham",
-              "Ham",
-              "Ham",
-            ];
+            // var toppings = ["it was accepabile in the 90s it was acceptable at the time helkol asdsadaqwd asd aasd awiodjasidj awiodja soidj aoidjoiwad jiaosdj awoidjaoisjd oiawjd oiasjdioawjd oiasjd oijawdoi jasoidj awoiasd awiodjasidj awiodja soidj aoidjoiwad jiaosdj awoidjaoisjd oiawjd oiasjdioawjd oiasjd oijawdoi jasoidj awoiwiodjasidj awiodja soidj aoidjoiwad jiaosdj awoidjaoisjd oiawjd oiasjdioawjd oiasjd oijawdoi jasoidj awoijd oiwa",
+            //   "Cheese",
+            //   "Pepperoni",
+            //   "Olives",
+            //   "Jalapenos",
+            //   "Pineapple",
+            //   "Ham",
+            //   "Ham",
+            //   "Ham",
+            //   "Ham",
+            //   "Ham",
+            //   "Ham",
+            //   "Ham",
+            //   "Ham",
+            //   "Ham",
+            //   "Ham",
+            //   "Ham",
+            //   "Ham",
+            //   "Ham",
+            //   "Ham",
+            //   "Ham",
+            //   "Ham",
+            //   "Ham",
+            //   "Ham",
+            //   "Ham",
+            //   "Ham",
+            //   "Ham",
+            //   "Ham",
+            //   "Ham",
+            //   "Ham",
+            //   "Ham",
+            //   "Ham",
+            //   "Ham",
+            //   "Ham",
+            //   "Ham",
+            //   "Ham",
+            // ];
 
             var labScroll = true, userIndex = -1, userIP, userMTypeImg, studentNumber, studentOS, labdatavalidated, currOnHover = "-", timeout; var lab_data, class_data, lab_guac, labStepValues, miniMap, miniMapTopology, miniMapdetails, currentEditor = "vi";
-
+            // let listItem = document.querySelector(".code_block")
+            // for (let value of toppings) {
+            //   listValue = document.createElement("li");
+            //   listValue.textContent = value;
+            //   listValue.onclick = renderLabs()
+            //   listItem.appendChild(listValue);
+            // }
 
 
             function htmlEncode(value, nBlkType) {
@@ -229,13 +239,7 @@ https://www.w3schools.com/css/css_navbar.asp
               } catch (err) { $.notify({ message: 'Oops, unable to copy' }, { delay: 500, allow_dismiss: true, type: 'danger' }); } document.body.removeChild(textArea);
             }
 
-
-
-            let listItem = document.querySelector(".code_block")
-            for (let value of toppings) {
-              listValue = document.createElement("li");
-              listValue.textContent = value;
-              listValue.onclick = function copyDivToClipboard() {
+            function renderLabs() {
                 console.log(this)
                 this.className = "clicked"
 
@@ -319,18 +323,15 @@ https://www.w3schools.com/css/css_navbar.asp
                 outLabGroup = outLabGroup.replace(/<LABSTEPS>/g, outLabSteps);
                 $("#labsteps_panel_content").append(outLabGroup);
               }
-              listItem.appendChild(listValue);
-            }
           </script>
+
+<script>
+  renderLabs();
+  </script>
 
           <div id="ending">
             thing goes here
           </div>
-
-          <script src="http://cdn.jsdelivr.net/gh/teddyshaw1992/lab-exercise-html/examples3.js">
-
-
-          </script>
 
         </div>
       </div>
