@@ -12,4 +12,4 @@ chmod 600 ~/.ssh/authorized_keys\n\
 scp -r ~/.ssh 10.0.x.1:~/\n\
 scp -r ~/.ssh 10.0.x.2:~/\n\
 ssh 10.0.x.1\n\
->>DESC:[os_user@ip-10-0-x-1 ~]$\n\'
+>>DESC:[os_user@ip-10-0-x-1 ~]$\n';
