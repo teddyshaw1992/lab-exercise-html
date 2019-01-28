@@ -4,6 +4,7 @@
 <head>
   <link id="pageStyleSheet" rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
   <title>Dynamically Populate List Items</title>
   <style>
     * {
@@ -69,12 +70,12 @@
       border-color: #ddd;
     }
 
-    .code_block {
+    .panel-body {
       padding: 0;
       margin: 10px;
     }
 
-    .code_block li {
+    .panel-body pre li {
       display: block;
       padding: 9.5px;
       margin: 0 0 10px;
@@ -88,7 +89,7 @@
       font-family: Menlo, Monaco, Consolas, "Courier New", monospace;
     }
 
-    .code_block li:hover {
+    .panel-body pre:hover {
       transition: .5s;
       background-color: #e0e0e0;
     }
@@ -169,6 +170,67 @@ https://www.w3schools.com/css/css_navbar.asp
               "Ham",
               "Ham",
             ];
+
+            var labScroll = true, userIndex = -1, userIP, userMTypeImg, studentNumber, studentOS, labdatavalidated, currOnHover = "-", timeout; var lab_data, class_data, lab_guac, labStepValues, miniMap, miniMapTopology, miniMapdetails, currentEditor = "vi";
+
+
+
+            function htmlEncode(value, nBlkType) {
+              var outVal;
+
+              if (nBlkType == 1) { outVal = value; }
+              else if (nBlkType == 2) { outVal = $('<div/>').text(value).html(); }
+              else { outVal = $('<div/>').text(value).html(); }
+
+              if (value.includes("<")) { console.log(nBlkType, value, outVal); }
+
+              return outVal;
+            }
+
+            function userEncode(value, nBlockType) {
+              var uhtml = value.replace(/\.x\./ig, "." + studentNumber + ".");
+              uhtml = uhtml.replace(/\-x\-/g, "-" + studentNumber + "-");
+
+              for (var key in labStepValues) {
+                var value = labStepValues[key];
+                uhtml = uhtml.replace(key, labStepValues[key]);
+              }
+              return htmlEncode(uhtml, nBlockType);
+            }
+
+            function copyme(inEl) {
+              console.log(inEl)
+              inEl.addClass("clicked")
+              var copyValue = inEl.text();
+              copyTextToClipboard(copyValue);
+              $(inEl).animate({ opacity: '0.1' }).animate({ opacity: '.7' }).addClass("preGreen");
+
+              var namePre = $(inEl).attr('id');
+              if (typeof (namePre) != "undefined") {
+                if (namePre.includes("_end")) {
+                  namePrePrs = namePre.split(" ,");
+                  namePre_prs = namePrePrs[2].split("_");
+                  var currEl = document.getElementById("lilab" + namePre_prs[0]);
+                  namePre_data = $(currEl).html();
+                  if (!namePre_data.includes("fa fa-check")) {
+                    namePre_data = '<a href="javascript: showLab(' + namePre_prs[0] + ');"><i class="fa fa-check" aria-hidden="true"></i> Lab ' + namePre_prs[0] + '</a>';
+                    $(currEl).html(namePre_data);
+                  }
+                }
+              }
+            }
+
+            function copyTextToClipboard(text) {
+              var textArea = document.createElement("textarea"); textArea.style.position = 'fixed'; textArea.style.top = 0; textArea.style.left = 0; textArea.style.width = '2em'; textArea.style.height = '2em'; textArea.style.padding = 0; textArea.style.border = 'none'; textArea.style.outline = 'none'; textArea.style.boxShadow = 'none'; textArea.style.background = 'transparent'; textArea.value = text; document.body.appendChild(textArea); textArea.select();
+              try {
+                var successful = document.execCommand('copy'); var msg = successful ? 'successful' : 'unsuccessful';
+                //$(this).notify({ message:'Copied to Clipboard : ' + text },{ delay:500,allow_dismiss:true });
+                console.log(this)
+              } catch (err) { $.notify({ message: 'Oops, unable to copy' }, { delay: 500, allow_dismiss: true, type: 'danger' }); } document.body.removeChild(textArea);
+            }
+
+
+
             let listItem = document.querySelector(".code_block")
             for (let value of toppings) {
               listValue = document.createElement("li");
@@ -176,23 +238,86 @@ https://www.w3schools.com/css/css_navbar.asp
               listValue.onclick = function copyDivToClipboard() {
                 console.log(this)
                 this.className = "clicked"
-                const el = document.createElement('textarea');  // Create a <textarea> element
-                el.value = this.textContent;                                 // Set its value to the string that you want copied
-                el.setAttribute('readonly', '');                // Make it readonly to be tamper-proof
-                el.style.position = 'absolute';
-                el.style.left = '-9999px';                      // Move outside the screen to make it invisible
-                document.body.appendChild(el);                  // Append the <textarea> element to the HTML document
-                const selected =
-                  document.getSelection().rangeCount > 0        // Check if there is any content selected previously
-                    ? document.getSelection().getRangeAt(0)     // Store selection if found
-                    : false;                                    // Mark as false to know no selection existed before
-                el.select();                                    // Select the <textarea> content
-                document.execCommand('copy');                   // Copy - only works as a result of a user action (e.g. click events)
-                document.body.removeChild(el);                  // Remove the <textarea> element
-                if (selected) {                                 // If a selection existed before copying
-                  document.getSelection().removeAllRanges();    // Unselect everything on the HTML document
-                  document.getSelection().addRange(selected);   // Restore the original selection
+
+
+
+
+                var courselabs = courselabsteps.split('\n'); var outLabSteps = '', outLabGroup = ""; var DNDisplay = true, labcnt = 0, codeBlock_lncnt = 0, codeBlock = "", codeBlockEn = false, labNumber, labNumber_rgx = /(>>LAB\s(\d+)\D)/;
+                var tmp_labPanel = '<div class="panel panel-default" id="lab<LABNUMBER>"> \
+		<div class="panel-heading"><h3><LABTITLE></h3><LABDESCRIPTION></div> \
+		<div class="panel-body"><LABSTEPS> \
+		</div></div> ';
+                for (var stp = 0; stp < courselabs.length; stp++) {
+                  if (courselabs[stp].includes(">>LAB")) {
+                    labcnt++;
+                    courselabs[stp] = courselabs[stp].trim();
+                    labNumber = courselabs[stp].match(labNumber_rgx);
+                    if (labcnt == 1) {
+                      outLabGroup = tmp_labPanel;
+                    } else {
+                      outLabSteps += ' <div class="alert alert-info"><strong><i class="fa fa-info-circle" aria-hidden="true"></i></strong> Refer to the Lab Guide to Check Your Work.</div>';
+                      outLabGroup = outLabGroup.replace(/<LABSTEPS>/g, outLabSteps);
+                      $("#labsteps_panel_content").append(outLabGroup);
+                      outLabGroup = tmp_labPanel; outLabSteps = "";
+                    }
+                    outLabGroup = outLabGroup.replace(/<LABNUMBER>/g, labNumber[2]);
+                    outLabGroup = outLabGroup.replace(/<LABTITLE>/g, courselabs[stp].substring(2));
+                  } else if (courselabs[stp].includes(">>LBDESC:")) {
+                    courselabs[stp] = courselabs[stp].trim();
+                    outLabGroup = outLabGroup.replace(/<LABDESCRIPTION>/g, courselabs[stp].substring(9));
+                  } else if (courselabs[stp].includes(">>DESC:") && DNDisplay) {
+                    courselabs[stp] = courselabs[stp].trim();
+                    outLabSteps += '<strong>' + userEncode(courselabs[stp].substring(7), 2) + '</strong><br />';
+                  } else if (courselabs[stp].includes(">>DSCRLG:") && DNDisplay) {
+                    courselabs[stp] = courselabs[stp].trim();
+                    outLabSteps += '<h4>' + userEncode(courselabs[stp].substring(9), 2) + '</h4>';
+                  } else if (courselabs[stp].includes(">>DSCWEL:") && DNDisplay) {
+                    courselabs[stp] = courselabs[stp].trim();
+                    outLabSteps += '<div class="alert alert-info"><strong><i class="fa fa-info-circle" aria-hidden="true"></i></strong> ' + userEncode(courselabs[stp].substring(9), 2) + '</div>';
+                  } else if (courselabs[stp].includes(">>Task ") && DNDisplay) {
+                    courselabs[stp] = courselabs[stp].trim();
+                    outLabSteps += '<h4>' + courselabs[stp].substring(2) + '</h4>';
+                  } else if (courselabs[stp].includes(">>codestart") && DNDisplay) {
+                    codeBlockEn = true; codeBlock_lncnt = 0; codeBlock = "<div class='input-group'><textarea style='resize:none' class='form-control custom-control' rows='cdlncnt' ondblclick='copyTextToClipboard($(this).val())'>";
+                  } else if (courselabs[stp].includes(">>codeend") && DNDisplay) {
+                    if (codeBlock_lncnt > 9) { codeBlock_lncnt = 10; }
+                    codeBlock += "</textarea><span class='input-group-addon btn btn-default' onclick='copyTextToClipboard($(this).prev().val())'><i class='fa fa-hand-o-left' aria-hidden='true'></i> copy</span></div>";
+                    codeBlock = codeBlock.replace("cdlncnt", codeBlock_lncnt);
+                    outLabSteps += codeBlock;
+                    codeBlockEn = false;
+                  } else if (courselabs[stp].includes(">>DOWNLOAD(") && DNDisplay) {
+                    var dlRgx = /DOWNLOAD\((\d+)\)\((.+)\)\((.+)\)/;
+                    var downLoadV = dlRgx.exec(courselabs[stp]);
+                    outLabSteps += '<button class="btn btn-primary center-block" onclick="downLoadit(' + downLoadV[1] + ',\'' + downLoadV[3] + '\');">' + downLoadV[2] + '</button><br />';
+                  } else if (courselabs[stp].includes("DOWNLOADLNK(") && DNDisplay) {
+                    var dlRgx = /DOWNLOADLNK\((\d+)\)\((.+)\)\((.+)\)/;
+                    var downLoadV = dlRgx.exec(courselabs[stp]);
+                    outLabSteps += '<a target="download" class="btn btn-primary center-block" href="https://cdn.scottbuntin.com/' + downLoadV[3] + '" download>' + downLoadV[2] + '</a><br />';
+                  } else if (courselabs[stp].includes(">>step(") && DNDisplay) {
+                    courselabs[stp] = courselabs[stp].trim();
+                    var stpRgx = /step\((\d+)\)/;
+                    var stepNumber = stpRgx.exec(courselabs[stp]);
+                    outLabSteps += '<strong>Step ' + stepNumber[1] + '</strong><br />';
+                  } else if (courselabs[stp].includes(">>WINDOWSONLY")) {
+                    if (studentOS == "windows") { DNDisplay = true; } else { DNDisplay = false; }
+                  } else if (courselabs[stp].includes(">>LINUXONLY")) {
+                    if (studentOS == "linux") { DNDisplay = true; } else { DNDisplay = false; }
+                  } else if (courselabs[stp].includes(">>ENDONLY")) {
+                    DNDisplay = true;
+                  } else if (DNDisplay) {
+                    if (courselabs[stp].includes("!!!")) {
+                      courselabs[stp] = courselabs[stp].replace("!!!", "");
+                      outLabSteps += '<pre onclick="copyme($(this))" id="lilab' + labNumber + '_end">' + userEncode(courselabs[stp], 1) + '</pre>';
+                    } else if (codeBlockEn) {
+                      codeBlock += userEncode(courselabs[stp], 1) + "\n"; codeBlock_lncnt += 1;
+                    } else {
+                      outLabSteps += '<pre onclick="copyme($(this))">' + userEncode(courselabs[stp], 1) + '</pre>';
+                    }
+                  }
                 }
+                outLabSteps += ' <div class="alert alert-info"><strong><i class="fa fa-info-circle" aria-hidden="true"></i></strong> Refer to the Lab Guide to Check Your Work.</div>';
+                outLabGroup = outLabGroup.replace(/<LABSTEPS>/g, outLabSteps);
+                $("#labsteps_panel_content").append(outLabGroup);
               }
               listItem.appendChild(listValue);
             }
@@ -201,6 +326,11 @@ https://www.w3schools.com/css/css_navbar.asp
           <div id="ending">
             thing goes here
           </div>
+
+          <script src="http://cdn.jsdelivr.net/gh/teddyshaw1992/lab-exercise-html/examples3.js">
+
+
+          </script>
 
         </div>
       </div>
